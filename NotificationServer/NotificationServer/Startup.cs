@@ -1,5 +1,4 @@
-﻿using System.Web.Routing;
-using Microsoft.AspNet.SignalR;
+﻿using Microsoft.AspNet.SignalR;
 using Microsoft.Owin;
 using Microsoft.Owin.Cors;
 using Owin;
@@ -11,6 +10,9 @@ namespace NotificationServer
     {
         public void Configuration(IAppBuilder app)
         {
+            string sqlConnectionString =
+                System.Configuration.ConfigurationManager.ConnectionStrings["SignalRContext"].ConnectionString;
+            GlobalHost.DependencyResolver.UseSqlServer(sqlConnectionString);
             // Branch the pipeline here for requests that start with "/signalr"
             app.Map("/signalr", map =>
             {
